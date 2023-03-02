@@ -1,3 +1,4 @@
+;;;; -*- lexical-binding: t; -*-
 ;;;; -------------
 ;;;; Miscellaneous
 ;;;; -------------
@@ -56,15 +57,23 @@ selection to the kill ring."
                      (read-char "Blink to char: " t)))
   (search-forward (char-to-string char) nil nil arg))
 
+(defun blink-to-nth-char (arg char)
+  "Move point past ARGth occurrence in the buffer of CHAR."
+  (interactive (list (prefix-numeric-value current-prefix-arg)
+                     (read-char "Blink to char: " t)))
+  (save-excursion (beginning-of-buffer)
+    (search-forward (char-to-string char) nil nil arg)))
+
 
 ;;; ----------------------
 ;;; File buffer operations
 ;;; ----------------------
 
+
 (defmacro with-temp-file-buffer (file &rest body)
   "Executes BODY in a temporary buffer for FILE."
   `(with-temp-buffer
-     (find-file ,file)
+       (find-file ,file)
      ,@body
      (kill-this-buffer)))
 
@@ -89,25 +98,26 @@ FILE."
   "Returns T if the current link is blank (containing only whitespace), and NIL
 if not."
   (save-excursion
-    (beginning-of-line)
-    (and (skip-syntax-forward " ") (eolp))))
+   (beginning-of-line)
+   (and (skip-syntax-forward " ") (eolp))))
 
 (defun count-blank-lines ()
   "Counts the number of blank lines in the current buffer."
   (let ((total 0))
     (save-excursion
-      (goto-char (point-min))
-      (cl-loop until (eobp) do
-               (when (current-line-blank-p)
-                 (setq total (1+ total)))
-               (forward-line 1)))
+     (goto-char (point-min))
+     (cl-loop until (eobp) do
+              (when (current-line-blank-p)
+                (setq total (1+ total)))
+              (forward-line 1)))
     total))
 
 (defun file-blank-lines (file)
   "Returns the number of blank lines in FILE."
   (let ((result 0))
     (with-temp-file-buffer file
-      (setq result (count-blank-lines)))))
+      (setq result (count-blank-lines)))
+    result))
 
 
 ;;; --------------------------
@@ -118,17 +128,21 @@ if not."
 (defun insert-license-header (license)
   "Inserts the header appropriate for LICENSE."
   (interactive (list (read-string "License name: " nil nil "MIT")))
-  (let* ((filename (concat "~/" license))
-         (start (point))
-         (beg (point-min))
-         (end (file-length filename))
-         (lines (file-lines filename))
-         (blank-lines (file-blank-lines filename))
-         (comment-chars 3))
-    (goto-char beg)
+  (cond (((string-equal license "X11")
+          (setq license "MIT"))
+         ((string-equal license "BSD")
+          (setq license "BSD-3"))
+         ((string-equal license "LGPL")
+          (setq license "LGPLv3"))
+         (t (upcase-word license))))
+  (let ((filename (concat "~/licenses/" license))
+        (beg (point-min))
+        (end (file-length filename))
+        (lines (file-lines filename))
+        (blank-lines (file-blank-lines filename))
+        (comment-chars 3)))
     (save-excursion
-      (insert-file-contents filename)
-      (comment-region beg end comment-chars))
-    ;; TODO: return to original location
-    (goto-char (+ start end (* (- lines blank-lines)
-                               (1+ comment-chars))))))
+      (goto-char beg)
+     (insert-file-contents filename t)
+     (comment-region beg end comment-chars)))
+
