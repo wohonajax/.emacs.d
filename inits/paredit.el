@@ -4,6 +4,7 @@
 ;;;; -------------------
 
 
+(require 'paredit)
 (add-hook 'slime-repl-mode-hook (lambda () (paredit-mode 1)))
 (add-something-to-mode-hooks '(emacs-lisp ielm lisp lisp-interaction scheme)
                              #'enable-paredit-mode)
@@ -77,46 +78,45 @@
         (throw 'done t))
       (paredit-backward-inject))))
 
-;; (eval-after-load 'paredit
-;;   (progn
-;;     (nconc paredit-commands
-;; 	   '("Extreme Barfage, Slurpage, Injection"
-;;              (("C-M-)")
-;; 	      paredit-slurp-all-the-way-forward
-;; 	      ("(foo (bar |baz) quux zot)"
-;; 	       "(foo (bar |baz quux zot))")
-;; 	      ("(a b ((c| d)) e f)"
-;; 	       "(a b ((c| d)) e f)"))
-;;              (("C-M-}" "M-F")
-;; 	      paredit-barf-all-the-way-forward
-;; 	      ("(foo (bar |baz quux) zot)"
-;; 	       "(foo (bar|) baz quux zot)"))
-;;              (("C-M-]")
-;; 	      paredit-inject-in-end
-;; 	      ("(foo (bar baz) quux| zot)"
-;; 	       "(foo (bar baz quux|) zot)"))
-;;              (("C-M-(")
-;; 	      paredit-slurp-all-the-way-backward
-;; 	      ("(foo bar (baz| quux) zot)"
-;; 	       "((foo bar baz| quux) zot)")
-;; 	      ("(a b ((c| d)) e f)"
-;; 	       "(a b ((c| d)) e f)"))
-;;              (("C-M-{" "M-B")
-;; 	      paredit-barf-all-the-way-backward
-;; 	      ("(foo (bar baz |quux) zot)"
-;; 	       "(foo bar baz (|quux) zot)"))
-;;              (("C-M-[")
-;; 	      paredit-inject-in-front
-;; 	      ("(foo |bar (baz quux) zot)"
-;; 	       "(foo |(bar baz quux) zot)"))
-;;              (("M-[")
-;; 	      paredit-forward-inject
-;; 	      ("(foo| bar (baz quux) zot)"
-;; 	       "(foo| (bar baz quux) zot)"))
-;;              (("M-]")
-;; 	      paredit-backward-inject
-;; 	      ("(foo (bar baz) quux |zot)"
-;; 	       "(foo (bar baz quux) |zot)"))))
-;;     (paredit-define-keys)
-;;     (paredit-annotate-mode-with-examples)
-;;     (paredit-annotate-functions-with-examples)))
+(nconc paredit-commands
+       '("Extreme Barfage, Slurpage, Injection"
+         (("C-M-)")
+	  paredit-slurp-all-the-way-forward
+	  ("(foo (bar |baz) quux zot)"
+	   "(foo (bar |baz quux zot))")
+	  ("(a b ((c| d)) e f)"
+	   "(a b ((c| d)) e f)"))
+         (("C-M-}" "M-F")
+	  paredit-barf-all-the-way-forward
+	  ("(foo (bar |baz quux) zot)"
+	   "(foo (bar|) baz quux zot)"))
+         (("C-M-]")
+	  paredit-inject-in-end
+	  ("(foo (bar baz) quux| zot)"
+	   "(foo (bar baz quux|) zot)"))
+         (("C-M-(")
+	  paredit-slurp-all-the-way-backward
+	  ("(foo bar (baz| quux) zot)"
+	   "((foo bar baz| quux) zot)")
+	  ("(a b ((c| d)) e f)"
+	   "(a b ((c| d)) e f)"))
+         (("C-M-{" "M-B")
+	  paredit-barf-all-the-way-backward
+	  ("(foo (bar baz |quux) zot)"
+	   "(foo bar baz (|quux) zot)"))
+         (("C-M-[")
+	  paredit-inject-in-front
+	  ("(foo |bar (baz quux) zot)"
+	   "(foo |(bar baz quux) zot)"))
+         (("M-[")
+	  paredit-forward-inject
+	  ("(foo| bar (baz quux) zot)"
+	   "(foo| (bar baz quux) zot)"))
+         (("M-]")
+	  paredit-backward-inject
+	  ("(foo (bar baz) quux |zot)"
+	   "(foo (bar baz quux) |zot)"))))
+
+(paredit-define-keys)
+(paredit-annotate-mode-with-examples)
+(paredit-annotate-functions-with-examples)
