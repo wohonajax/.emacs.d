@@ -15,9 +15,11 @@
         ("melpa" . "https://melpa.org/packages/")
         ("elpy" . "https://jorgenschaefer.github.io/packages/")))
 
-(add-to-list 'load-path "~/.emacs.d/elpa")
+(let ((em-dir (expand-file-name user-emacs-directory)))
+  (add-to-list 'load-path (concat em-dir "elpa"))
+  (setq custom-file (concat em-dir "custom.el")))
 
-(load "~/.emacs.d/custom.el")
+(load custom-file)
 
 (package-initialize)
 
@@ -31,8 +33,5 @@
 			(file-exists-p (concat "~/.emacs.d/initelcs/" x "c"))))
                   (directory-files "~/.emacs.d/inits/")))
 
-(setq custom-file
-      (concat (expand-file-name user-emacs-directory)
-              "custom.el"))
-
-(enable-theme 'selenized-dark)
+; (enable-theme 'selenized-black)
+(load-theme 'doom-tokyo-night t)
