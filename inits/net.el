@@ -32,6 +32,10 @@
       mu4e-sent-folder "/sent"
       mu4e-trash-folder "/trash")
 
+(setq mu4e-maildir-shortcuts
+      '(("/Inbox" . ?i)
+        ("/[Gmail]/All Mail/" . ?a)))
+
 (setq mu4e-get-mail-command "mbsync -a"
       mu4e-compose-reply-ignore-address '("no-?reply" "wohonajax@gmail.com")
       mu4e-html2text-command "w3m -T text/html"
@@ -41,6 +45,9 @@
       mu4e-compose-signature-auto-include nil
       mu4e-use-fancy-chars t
       mu4e-change-filenames-when-moving t)
+
+(setq mu4e-user-mail-address-list
+      '("wohonajax@gmail.com" "wohonajax1@gmail.com"))
 
 (defvar my-mu4e-account-alist
   '(("Gmail"

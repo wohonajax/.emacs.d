@@ -6,6 +6,8 @@
 
 (add-to-list 'load-path "~/.emacs.d/site-lisp/cc-mode")
 
+(require 'company)
+
 (global-company-mode t)
 (global-display-line-numbers-mode t)
 
@@ -14,7 +16,8 @@
                              #'rainbow-delimiters-mode)
 
 (show-paren-mode t)
-(setq show-paren-style 'expression)
+(setq show-paren-style 'expression
+      blink-matching-paren t)
 (add-something-to-mode-hooks '(text slime lisp emacs-lisp c)
                              #'show-paren-mode)
 
@@ -22,11 +25,14 @@
   "Turn on pseudo-structural editing of Lisp code."
   t)
 
+(require 'ido)
 (ido-mode t)
 (ido-everywhere t)
 (ido-ubiquitous-mode t)
 (setq ido-enable-flex-matching t
       ido-everywhere t)
+
+(require 'amx)
 (amx-mode t)
 
 (setq-default save-place)

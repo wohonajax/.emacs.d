@@ -33,5 +33,5 @@
 			(file-exists-p (concat "~/.emacs.d/initelcs/" x "c"))))
                   (directory-files "~/.emacs.d/inits/")))
 
-; (enable-theme 'selenized-black)
+;(enable-theme 'selenized-dark)
 (load-theme 'doom-tokyo-night t)
