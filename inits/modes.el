@@ -44,6 +44,9 @@
 (add-hook 'emacs-lisp-mode-hook #'highlight-defined-mode)
 (add-hook 'text-mode-hook #'flyspell-mode)
 
+(add-something-to-mode-hooks '(lisp python c)
+                             #'projectile-mode)
+
 (setq warning-minimum-level :emergency)
 (require 'server)
 (unless (server-running-p)
