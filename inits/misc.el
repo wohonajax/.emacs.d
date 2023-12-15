@@ -145,4 +145,3 @@ if not."
       (goto-char beg)
      (insert-file-contents filename t)
      (comment-region beg end comment-chars)))
-

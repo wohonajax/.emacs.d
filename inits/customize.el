@@ -11,9 +11,12 @@
 (setq inhibit-startup-message t
       inhibit-startup-echo-area-message t
       gc-cons-threshold 10000000
-      default-directory "/mnt/sdb/home"
+      max-lisp-eval-depth 16000
+      default-directory "/home/hsdc/"
       browse-url-browser-function 'eww
       tab-stop-list (number-sequence 4 120 4))
+
+(setq display-line-numbers-type nil)
 
 (let ((dir "~/.emacs.d/backups/"))
   (unless (file-directory-p dir)

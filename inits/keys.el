@@ -8,18 +8,13 @@
 ;;;; Functions
 ;;;; ---------
 
-;;; find file from home directory
-(global-set-key (kbd "C-x C-f") (lambda ()
-                                  (interactive)
-                                  (cd "~/")
-                                  (call-interactively #'ido-find-file)))
 ;;; autoindent newline on pressing enter
 (global-set-key (kbd "RET") #'newline-and-indent)
 ;;; summon the scratch pad
 (global-set-key (kbd "s-s") (lambda () (interactive)
                               (if (memq "*scratch*" (window-list))
                                   (switch-to-buffer "*scratch*"))))
-;;; run SLIME
+;;; run SLY
 (global-set-key (kbd "C-x H-s") #'sly)
 ;;; eval-buffer
 (global-set-key (kbd "C-x M-e") #'eval-buffer)
@@ -32,21 +27,8 @@
 (global-set-key (kbd "M-g M-c") #'blink-to-nth-char)
 ;;; kill this buffer
 (global-set-key (kbd "C-x k") #'kill-this-buffer)
-;;; switch buffers
-(global-set-key (kbd "C-x b") #'ido-switch-buffer)
-;;; emacs as client
-(defun my-done ()
-  "Exit server buffers and hide the main emacs window."
-  (interactive)
-  (server-edit)
-  (make-frame-invisible nil t))
 
-(global-set-key (kbd "C-x C-c") #'my-done)
 (global-set-key (kbd "C-M-c") #'save-buffers-kill-emacs)
-;;; Magit status buffer
-(global-set-key (kbd "C-x g") #'magit-status)
-;;; Magit dispatch popup (show commands)
-(global-set-key (kbd "C-x M-g") #'magit-dispatch)
 ;;; hippie-expand
 (global-set-key (kbd "M-/") #'hippie-expand)
 
