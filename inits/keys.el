@@ -26,7 +26,7 @@
 ;;; blink-to-char
 (global-set-key (kbd "M-g M-c") #'blink-to-nth-char)
 ;;; kill this buffer
-(global-set-key (kbd "C-x k") #'kill-this-buffer)
+(global-set-key (kbd "C-x k") #'kill-current-buffer)
 
 (global-set-key (kbd "C-M-c") #'save-buffers-kill-emacs)
 ;;; hippie-expand
