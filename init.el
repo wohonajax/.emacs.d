@@ -10,9 +10,7 @@
 (require 'package)
 
 (mapc (lambda (item) (add-to-list 'package-archives item t))
-      '(("gnu" . "http://elpa.gnu.org/packages/")
-        ;("melpa-stable" . "https://stable.melpa.org/packages/")
-        ("melpa" . "https://melpa.org/packages/")
+      '(("melpa" . "https://melpa.org/packages/")
         ("elpy" . "https://jorgenschaefer.github.io/packages/")))
 
 (package-initialize)
@@ -23,7 +21,13 @@
 
 (load custom-file)
 
+(use-package zenburn-theme
+  :ensure t
+  :demand
+  :config (load-theme 'zenburn))
+
 (use-package vertico
+  :ensure t
   :custom
   (vertico-count 13)
   (vertico-resize t)
@@ -32,17 +36,22 @@
   (vertico-mode))
 
 (use-package marginalia
+  :ensure t
   :bind
   (("M-A" . marginalia-cycle))
   :config
   (marginalia-mode))
 
 (use-package orderless
+  :ensure t
   :custom
   (completion-styles '(orderless))
   (completion-category-defaults nil)
   (completion-category-overrides
-   '((file (styles basic-remote orderless))))
+  '((file (styles orderless))
+    (command (styles orderless))
+    (symbol (styles orderless))
+    (variable (styles orderless))))
   (orderless-matching-styles
    '(orderless-literal
      orderless-prefixes
@@ -108,6 +117,7 @@
   (which-key-mode))
 
 (use-package corfu
+  :ensure t
   :custom
   (corfu-cycle t)
   (corfu-auto t)
@@ -117,7 +127,7 @@
          ("C-n" . corfu-next)
          ("C-p" . corfu-previous)
          ("C-g" . corfu-quit))
-  :init
+  :config
   (global-corfu-mode)
   (corfu-history-mode))
 
@@ -130,6 +140,20 @@
   :config
   (setq-default sly-symbol-completion-mode nil))
 
+(use-package fic-mode
+  :ensure t
+  :commands (fic-mode)
+  :hook prog-mode
+  :init (setq fic-highlighted-words
+              '("FIXME" "FIXME\:" "TODO" "TODO\:"
+                "HACK" "HACK\:" "NOTE" "NOTE\:"
+                "KLUDGE" "KLUDGE\:" "BUG" "BUG\:"
+                "REFACTOR" "REFACTOR\:")))
+
+(use-package highlight-defined
+  :ensure t
+  :hook emacs-lisp-mode)
+
 (use-package rainbow-delimiters
   :ensure t
   :init
@@ -139,24 +163,6 @@
 (use-package highlight-numbers
   :ensure t
   :hook (text-mode prog-mode sly-mrepl-mode))
-
-(use-package fic-mode
-  :ensure t
-  :commands (fic-mode)
-  :hook prog-mode
-  :init (setq fic-highlighted-words
-              '("FIXME" "FIXME:" "TODO" "TODO:"
-                "HACK" "HACK:" "NOTE" "NOTE:"
-                "BUG" "BUG:" "REFACTOR" "REFACTOR:")))
-
-(use-package highlight-defined
-  :ensure t
-  :hook emacs-lisp-mode)
-
-(use-package zenburn-theme
-  :ensure t
-  :demand
-  :config (load-theme 'zenburn))
 
 (use-package magit
   :ensure t
